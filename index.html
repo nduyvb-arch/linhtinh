@@ -231,10 +231,26 @@
     /* ==============================================================
        DATE PICKER (Bước 2)
        ============================================================== */
+    /* Container bọc ngoài — mỗi tuần là một nhóm */
     .day-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    /* Label tiêu đề tuần */
+    .week-group-label {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--clr-primary);
+      margin-bottom: -.2rem;
+    }
+    /* Grid ngày bên trong mỗi nhóm */
+    .day-grid-inner {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: .7rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .65rem;
     }
     .day-card {
       display: flex;
@@ -584,16 +600,32 @@ const CONFIG = {
   /* ----- Formspree endpoint (thay bằng URL thật của bạn) ----- */
   FORM_ENDPOINT: "https://formspree.io/f/xvkzbwwg",
 
-  /* ----- Tuần này: thứ + ngày/tháng ----- */
-  /* Duy chỉ rảnh T6, T7, CN → busy = true cho các ngày còn lại */
-  days: [
-    { label: "Thứ Hai",  date: "13/10", emoji: "😴", busy: true  },
-    { label: "Thứ Ba",   date: "14/10", emoji: "🌱", busy: true  },
-    { label: "Thứ Tư",   date: "15/10", emoji: "☕", busy: true  },
-    { label: "Thứ Năm",  date: "16/10", emoji: "🌿", busy: true  },
-    { label: "Thứ Sáu",  date: "17/10", emoji: "✨", busy: false },
-    { label: "Thứ Bảy",  date: "18/10", emoji: "🌸", busy: false },
-    { label: "Chủ Nhật", date: "19/10", emoji: "☀️", busy: false },
+  /* ----- Lịch theo từng tuần — tuần này T2-T5 bận, T6-CN rảnh; tuần sau rảnh cả tuần ----- */
+  weekGroups: [
+    {
+      label: "Tuần này",
+      days: [
+        { label: "Thứ Hai",  date: "12/10", emoji: "😴", busy: true  },
+        { label: "Thứ Ba",   date: "13/10", emoji: "🌱", busy: true  },
+        { label: "Thứ Tư",   date: "14/10", emoji: "☕", busy: true  },
+        { label: "Thứ Năm",  date: "15/10", emoji: "🌿", busy: true  },
+        { label: "Thứ Sáu",  date: "16/10", emoji: "✨", busy: false },
+        { label: "Thứ Bảy",  date: "17/10", emoji: "🌸", busy: false },
+        { label: "Chủ Nhật", date: "18/10", emoji: "☀️", busy: false },
+      ]
+    },
+    {
+      label: "Tuần sau (chắc khỏi chân rồi 😄)",
+      days: [
+        { label: "Thứ Hai",  date: "19/10", emoji: "😴", busy: false },
+        { label: "Thứ Ba",   date: "20/10", emoji: "🌱", busy: false },
+        { label: "Thứ Tư",   date: "21/10", emoji: "☕", busy: false },
+        { label: "Thứ Năm",  date: "22/10", emoji: "🌿", busy: false },
+        { label: "Thứ Sáu",  date: "23/10", emoji: "✨", busy: false },
+        { label: "Thứ Bảy",  date: "24/10", emoji: "🌸", busy: false },
+        { label: "Chủ Nhật", date: "25/10", emoji: "☀️", busy: false },
+      ]
+    },
   ],
 
   /* ----- Các lựa chọn kiểu gặp ----- */
@@ -620,14 +652,14 @@ const CONFIG = {
 
   /* ----- Văn bản giao diện — chỉnh giọng văn ở đây ----- */
   text: {
-    heroTitle:    "Trang ơi, gặp nhau chút được không 🌿",
+    heroTitle:    "Em muốn gặp Trang 1 hôm 🌿",
     heroSub:      "Chị chọn giúp em nha 🙏",
     step1Label:   "Bước 1 / 3",
     step1Title:   "Mình gặp nhau kiểu gì thì chị thích?",
     step1Desc:    "Chọn một cái nha, không có lựa chọn nào sai hết 😄",
     step2Label:   "Bước 2 / 3",
-    step2Title:   "Chị rảnh ngày nào tuần này?",
-    step2Desc:    "Em chọn ra mấy ngày rảnh rồi, chị thấy ngày nào được thì bấm nha",
+    step2Title:   "Chị rảnh ngày nào thì chọn nha!",
+    step2Desc:    "Chị chọn ngày nào thấy ổn là được nha, không cần vội~",
     step3Label:   "Bước 3 / 3",
     step3Title:   "Gần xong rồi!",
     step3Desc:    "Nhìn lại cho chắc, rồi gửi cho em nhé ☺️",
@@ -637,6 +669,7 @@ const CONFIG = {
     busyPopupSub: "Ngày đó em có kế hoạch rồi, nhưng Thứ Sáu, Thứ Bảy, hoặc Chủ Nhật em rảnh nha chị!",
     successTitle: "Duy đang phản hồi! 🎉",
     successSub:   "Cảm ơn chị đã bấm vào cái web lỏ này 😂 Em sẽ nhắn chị ngay!",
+    successSub2:  "em không biết rủ chị như nào nên làm ra cái vớ vẩn này 😅",
     otherTimeLabel: "Chị bận hết, muốn có giờ khác",
     otherTimePlaceholder: "Chị rảnh vào khoảng nào thì ghi ra giúp em nha...",
     suggestPlaceholder: "Xin mời...",
@@ -825,6 +858,7 @@ const CONFIG = {
       <div class="success-emoji" role="img" aria-label="Thành công">🎉</div>
       <h2 class="success-title" id="successHeading"></h2>
       <p  class="success-sub"  id="successSub"></p>
+      <p  class="success-sub"  id="successSub2" style="font-style:italic;"></p>
     </div>
   </section>
 
@@ -885,7 +919,8 @@ function init() {
 
   /* Success */
   document.getElementById("successHeading").textContent = T.successTitle;
-  document.getElementById("successSub").textContent     = T.successSub;
+  document.getElementById("successSub").textContent      = T.successSub;
+  document.getElementById("successSub2").textContent     = T.successSub2;
 
   /* Step 3 labels */
   document.getElementById("noteLabelEl").textContent = T.noteLabel;
@@ -924,29 +959,43 @@ function init() {
   document.getElementById("suggestInput").placeholder = T.suggestPlaceholder;
   document.getElementById("customTimeInput").placeholder = T.otherTimePlaceholder;
 
-  /* Render lịch ngày */
+  /* Render lịch ngày — theo nhóm tuần */
   const dayGrid = document.getElementById("dayGrid");
-  C.days.forEach(day => {
-    const btn = document.createElement("button");
-    btn.className = "day-card" + (day.busy ? " busy" : "");
-    btn.type      = "button";
-    btn.setAttribute("role", "radio");
-    btn.setAttribute("aria-checked", "false");
-    btn.setAttribute("aria-label", `${day.label} ${day.date}`);
-    btn.innerHTML = `
-      <span class="day-emoji" aria-hidden="true">${day.emoji}</span>
-      <span class="day-name">${day.label}</span>
-      <span class="day-date">${day.date}</span>
-      <span class="day-check" aria-hidden="true">✓</span>
-    `;
-    btn.addEventListener("click", () => {
-      if (day.busy) {
-        showBusyPopup();
-      } else {
-        selectDay(day, btn);
-      }
+  C.weekGroups.forEach(group => {
+    /* Tiêu đề tuần */
+    const groupHeader = document.createElement("div");
+    groupHeader.className   = "week-group-label";
+    groupHeader.textContent = group.label;
+    dayGrid.appendChild(groupHeader);
+
+    /* Grid các ngày trong tuần */
+    const inner = document.createElement("div");
+    inner.className = "day-grid-inner";
+
+    group.days.forEach(day => {
+      const btn = document.createElement("button");
+      btn.className = "day-card" + (day.busy ? " busy" : "");
+      btn.type      = "button";
+      btn.setAttribute("role", "radio");
+      btn.setAttribute("aria-checked", "false");
+      btn.setAttribute("aria-label", `${day.label} ${day.date}`);
+      btn.innerHTML = `
+        <span class="day-emoji" aria-hidden="true">${day.emoji}</span>
+        <span class="day-name">${day.label}</span>
+        <span class="day-date">${day.date}</span>
+        <span class="day-check" aria-hidden="true">✓</span>
+      `;
+      btn.addEventListener("click", () => {
+        if (day.busy) {
+          showBusyPopup();
+        } else {
+          selectDay(day, btn);
+        }
+      });
+      inner.appendChild(btn);
     });
-    dayGrid.appendChild(btn);
+
+    dayGrid.appendChild(inner);
   });
 }
 
