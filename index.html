@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gặp nhau chút nha Trang ơi 🌿</title>
+  <meta name="description" content="Duy muốn rủ Trang đi gặp nhau một buổi cho vui — không áp lực gì hết!" />
+
+  <!-- ============================================================
+       FONT: Dùng Be Vietnam Pro — hỗ trợ tiếng Việt, đẹp, dễ đọc
+       Chỉ tải qua Google Fonts CDN (không có thư viện JS ngoài)
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==============================================================
+       DESIGN TOKENS — Sửa màu sắc tại đây
+       ============================================================== */
+    :root {
+      --clr-bg:        #faf7f2;
+      --clr-surface:   #ffffff;
+      --clr-primary:   #7aab8f;   /* sage xanh */
+      --clr-primary-d: #5e9273;
+      --clr-accent:    #e8b89a;   /* be cam nhẹ */
+      --clr-accent-d:  #d49a7a;
+      --clr-text:      #2c2c2c;
+      --clr-muted:     #7a7a7a;
+      --clr-border:    #e0dbd3;
+      --clr-card-sel:  #edf6f1;
+      --clr-danger:    #c0392b;
+      --clr-warn-bg:   #fff3cd;
+      --radius:        1rem;
+      --radius-sm:     .6rem;
+      --shadow:        0 4px 24px rgba(0,0,0,.08);
+      --shadow-hover:  0 8px 32px rgba(0,0,0,.13);
+      --transition:    .25s cubic-bezier(.4,0,.2,1);
+      --font:          'Be Vietnam Pro', sans-serif;
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --clr-bg:      #1a1d1b;
+        --clr-surface: #252b27;
+        --clr-text:    #e8e4df;
+        --clr-muted:   #9a9a9a;
+        --clr-border:  #363d38;
+        --clr-card-sel:#2a3a30;
+        --clr-warn-bg: #3a3000;
+      }
+    }
+
+    /* ==============================================================
+       RESET & BASE
+       ============================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      min-height: 100dvh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+    input, textarea { font-family: var(--font); }
+
+    /* ==============================================================
+       LAYOUT
+       ============================================================== */
+    .page {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ==============================================================
+       STEP SYSTEM — mỗi bước là một section
+       ============================================================== */
+    .step { display: none; flex-direction: column; gap: 1.25rem; animation: fadeUp .35s ease both; }
+    .step.active { display: flex; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==============================================================
+       HERO (Bước 0)
+       ============================================================== */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+      padding: 2rem 0;
+    }
+    .hero-emoji { font-size: 3.5rem; animation: wave 2.5s ease-in-out infinite; display: inline-block; }
+    @keyframes wave {
+      0%,100% { transform: rotate(-5deg); }
+      50%      { transform: rotate( 8deg); }
+    }
+    .hero-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .hero-title span { color: var(--clr-primary); }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--clr-muted);
+      max-width: 30ch;
+    }
+    .btn-start {
+      margin-top: .5rem;
+      background: var(--clr-primary);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: .9rem 2.2rem;
+      border-radius: 3rem;
+      box-shadow: 0 4px 16px rgba(122,171,143,.35);
+      transition: var(--transition);
+      letter-spacing: .02em;
+    }
+    .btn-start:hover, .btn-start:focus-visible {
+      background: var(--clr-primary-d);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(122,171,143,.45);
+    }
+    .btn-start:active { transform: translateY(0); }
+
+    .scroll-hint {
+      font-size: .8rem;
+      color: var(--clr-muted);
+      display: flex;
+      align-items: center;
+      gap: .3rem;
+    }
+
+    /* ==============================================================
+       STEP HEADER
+       ============================================================== */
+    .step-header { display: flex; flex-direction: column; gap: .4rem; }
+    .step-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--clr-primary);
+    }
+    .step-title { font-size: 1.3rem; font-weight: 700; line-height: 1.35; }
+    .step-desc  { font-size: .9rem; color: var(--clr-muted); }
+
+    /* ==============================================================
+       OPTION CARDS (Bước 1)
+       ============================================================== */
+    .option-grid { display: flex; flex-direction: column; gap: .75rem; }
+    .option-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      background: var(--clr-surface);
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      cursor: pointer;
+      text-align: left;
+    }
+    .option-card:hover {
+      border-color: var(--clr-primary);
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+    .option-card.selected {
+      border-color: var(--clr-primary);
+      background: var(--clr-card-sel);
+    }
+    .option-card.selected .option-check { opacity: 1; }
+    .option-icon { font-size: 2rem; flex-shrink: 0; }
+    .option-text { flex: 1; }
+    .option-name { font-weight: 600; font-size: 1rem; }
+    .option-hint { font-size: .82rem; color: var(--clr-muted); margin-top: .15rem; }
+    .option-check {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--clr-primary);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem;
+      opacity: 0;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+
+    /* Ô nhập gợi ý */
+    .suggest-box {
+      display: none;
+      flex-direction: column;
+      gap: .5rem;
+      animation: fadeUp .3s ease both;
+    }
+    .suggest-box.visible { display: flex; }
+    .suggest-box label { font-size: .9rem; font-weight: 500; }
+    .text-input {
+      width: 100%;
+      padding: .8rem 1rem;
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      background: var(--clr-surface);
+      color: var(--clr-text);
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color var(--transition);
+      min-height: 90px;
+    }
+    .text-input:focus { outline: none; border-color: var(--clr-primary); }
+
+    /* ==============================================================
+       DATE PICKER (Bước 2)
+       ============================================================== */
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: .7rem;
+    }
+    .day-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem .75rem;
+      background: var(--clr-surface);
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: var(--transition);
+      gap: .25rem;
+    }
+    .day-card:hover { border-color: var(--clr-accent); transform: translateY(-2px); }
+    .day-card.selected { border-color: var(--clr-accent); background: #fef5ee; }
+    @media (prefers-color-scheme: dark) {
+      .day-card.selected { background: #3a2a1a; }
+    }
+    .day-card.selected .day-check { opacity: 1; }
+    .day-card.busy { opacity: .55; cursor: pointer; }
+    .day-name { font-weight: 700; font-size: 1rem; }
+    .day-date { font-size: .8rem; color: var(--clr-muted); }
+    .day-emoji { font-size: 1.5rem; }
+    .day-check {
+      margin-top: .2rem;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--clr-accent-d);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    /* Nút "chị bận hết" */
+    .btn-other-time {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .9rem 1rem;
+      background: var(--clr-surface);
+      border: 2px dashed var(--clr-border);
+      border-radius: var(--radius);
+      color: var(--clr-muted);
+      font-size: .95rem;
+      font-weight: 500;
+      transition: var(--transition);
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+    }
+    .btn-other-time:hover { border-color: var(--clr-muted); color: var(--clr-text); }
+    .btn-other-time.selected {
+      border-style: solid;
+      border-color: var(--clr-accent);
+      color: var(--clr-text);
+    }
+    /* Ô nhập thời gian khác */
+    .custom-time-box { display: none; flex-direction: column; gap: .5rem; animation: fadeUp .3s ease both; }
+    .custom-time-box.visible { display: flex; }
+
+    /* ==============================================================
+       NAVIGATION BUTTONS
+       ============================================================== */
+    .nav-row {
+      display: flex;
+      gap: .75rem;
+      margin-top: .5rem;
+    }
+    .btn-back {
+      flex: 0 0 auto;
+      padding: .85rem 1.2rem;
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius);
+      color: var(--clr-muted);
+      font-size: .95rem;
+      font-weight: 600;
+      transition: var(--transition);
+      background: var(--clr-surface);
+    }
+    .btn-back:hover { border-color: var(--clr-muted); color: var(--clr-text); }
+    .btn-next {
+      flex: 1;
+      padding: .9rem 1rem;
+      border-radius: var(--radius);
+      background: var(--clr-primary);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(122,171,143,.3);
+      transition: var(--transition);
+    }
+    .btn-next:hover:not(:disabled) {
+      background: var(--clr-primary-d);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(122,171,143,.4);
+    }
+    .btn-next:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* Nút "Không được rùi" — luôn hiển thị ở dưới */
+    .nope-section {
+      margin-top: auto;
+      padding-top: 2rem;
+      text-align: center;
+    }
+    .btn-nope {
+      font-size: .9rem;
+      color: var(--clr-muted);
+      text-decoration: underline dotted;
+      text-underline-offset: 3px;
+      transition: color var(--transition);
+    }
+    .btn-nope:hover { color: var(--clr-text); }
+
+    /* ==============================================================
+       MÀN HÌNH NOPE
+       ============================================================== */
+    .nope-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 1.25rem;
+    }
+    .nope-emoji { font-size: 3rem; }
+    .nope-text { font-size: 1.1rem; font-weight: 600; line-height: 1.5; }
+    .nope-sub  { font-size: .9rem; color: var(--clr-muted); max-width: 28ch; }
+    .btn-back-from-nope {
+      margin-top: .5rem;
+      padding: .8rem 1.8rem;
+      border-radius: 3rem;
+      border: 2px solid var(--clr-primary);
+      color: var(--clr-primary);
+      font-size: .95rem;
+      font-weight: 600;
+      transition: var(--transition);
+      background: transparent;
+    }
+    .btn-back-from-nope:hover {
+      background: var(--clr-primary);
+      color: #fff;
+    }
+
+    /* ==============================================================
+       MÀN HÌNH CONFIRM (Bước 3)
+       ============================================================== */
+    .summary-card {
+      background: var(--clr-surface);
+      border: 1.5px solid var(--clr-border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .summary-row { display: flex; gap: .75rem; align-items: flex-start; }
+    .summary-row-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: .05rem; }
+    .summary-row-body { flex: 1; }
+    .summary-row-label { font-size: .75rem; color: var(--clr-muted); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+    .summary-row-val   { font-weight: 600; font-size: 1rem; }
+    .divider { height: 1px; background: var(--clr-border); }
+
+    /* Ô ghi chú thêm */
+    .note-label { font-size: .9rem; font-weight: 500; }
+    .note-hint  { font-size: .8rem; color: var(--clr-muted); }
+    .send-hint  { font-size: .8rem; color: var(--clr-muted); text-align: center; }
+
+    /* Nút gửi */
+    .btn-send {
+      width: 100%;
+      padding: 1rem;
+      border-radius: var(--radius);
+      background: var(--clr-accent);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(232,184,154,.4);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+    .btn-send:hover:not(:disabled) {
+      background: var(--clr-accent-d);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(232,184,154,.5);
+    }
+    .btn-send:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* Trạng thái spinner */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 3px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ==============================================================
+       MÀN HÌNH THÀNH CÔNG
+       ============================================================== */
+    .success-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 1.25rem;
+    }
+    .success-emoji { font-size: 3.5rem; animation: pop .5s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+    .success-title { font-size: 1.5rem; font-weight: 700; }
+    .success-sub   { font-size: .95rem; color: var(--clr-muted); max-width: 26ch; }
+
+    /* ==============================================================
+       COPY FALLBACK BUTTON
+       ============================================================== */
+    .btn-copy {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      padding: .75rem 1.2rem;
+      border: 2px solid var(--clr-border);
+      border-radius: var(--radius);
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--clr-muted);
+      background: var(--clr-surface);
+      transition: var(--transition);
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn-copy:hover { border-color: var(--clr-primary); color: var(--clr-text); }
+    .copy-feedback { font-size: .8rem; color: var(--clr-primary); min-height: 1rem; text-align: center; }
+
+    /* ==============================================================
+       ERROR BOX
+       ============================================================== */
+    .error-box {
+      display: none;
+      background: #fde8e6;
+      border: 1.5px solid #f5c6c2;
+      border-radius: var(--radius-sm);
+      padding: .9rem 1rem;
+      font-size: .9rem;
+      color: var(--clr-danger);
+      gap: .5rem;
+      align-items: flex-start;
+    }
+    @media (prefers-color-scheme: dark) {
+      .error-box { background: #3a1515; border-color: #6a2020; }
+    }
+    .error-box.visible { display: flex; }
+
+    /* ==============================================================
+       POPUP (Modal cảnh báo ngày bận)
+       ============================================================== */
+    .popup-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.45);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999;
+      padding: 1.5rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .popup-overlay.show { opacity: 1; pointer-events: auto; }
+    .popup-box {
+      background: var(--clr-surface);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      max-width: 340px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 16px 48px rgba(0,0,0,.2);
+      transform: translateY(20px) scale(.96);
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .popup-overlay.show .popup-box { transform: translateY(0) scale(1); }
+    .popup-emoji { font-size: 2.5rem; }
+    .popup-title { font-size: 1.15rem; font-weight: 700; }
+    .popup-desc  { font-size: .9rem; color: var(--clr-muted); }
+    .btn-popup-close {
+      margin-top: .25rem;
+      padding: .75rem 2rem;
+      border-radius: 3rem;
+      background: var(--clr-primary);
+      color: #fff;
+      font-size: .95rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    .btn-popup-close:hover { background: var(--clr-primary-d); }
+
+    /* ==============================================================
+       PROGRESS BAR
+       ============================================================== */
+    .progress-bar {
+      display: flex;
+      gap: .4rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .progress-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--clr-border);
+      transition: background var(--transition), transform var(--transition);
+    }
+    .progress-dot.done { background: var(--clr-primary); }
+    .progress-dot.active { background: var(--clr-accent); transform: scale(1.4); }
+
+    /* ==============================================================
+       RESPONSIVE TWEAKS
+       ============================================================== */
+    @media (min-width: 480px) {
+      .page { padding: 2.5rem 2rem 4rem; }
+      .hero-title { font-size: 2rem; }
+      .day-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+     CONFIG — Sửa nội dung ở đây, không cần đụng code bên dưới
+     ================================================================ -->
+<script>
+const CONFIG = {
+  /* ----- Tên người gửi / nhận ----- */
+  sender:   "Duy",
+  receiver: "Trang",
+
+  /* ----- Formspree endpoint (thay bằng URL thật của bạn) ----- */
+  FORM_ENDPOINT: "https://formspree.io/f/xvkzbwwg",
+
+  /* ----- Tuần này: thứ + ngày/tháng ----- */
+  /* Duy chỉ rảnh T6, T7, CN → busy = true cho các ngày còn lại */
+  days: [
+    { label: "Thứ Hai",  date: "13/10", emoji: "😴", busy: true  },
+    { label: "Thứ Ba",   date: "14/10", emoji: "🌱", busy: true  },
+    { label: "Thứ Tư",   date: "15/10", emoji: "☕", busy: true  },
+    { label: "Thứ Năm",  date: "16/10", emoji: "🌿", busy: true  },
+    { label: "Thứ Sáu",  date: "17/10", emoji: "✨", busy: false },
+    { label: "Thứ Bảy",  date: "18/10", emoji: "🌸", busy: false },
+    { label: "Chủ Nhật", date: "19/10", emoji: "☀️", busy: false },
+  ],
+
+  /* ----- Các lựa chọn kiểu gặp ----- */
+  meetTypes: [
+    {
+      id:   "workshop",
+      icon: "🎨",
+      name: "Workshop / Triển lãm",
+      hint: "Vừa làm gì đó, vừa nói chuyện, ít awkward hơn"
+    },
+    {
+      id:   "walk",
+      icon: "🚶‍♂️",
+      name: "Đi dạo + uống nước",
+      hint: "Chill nhất, tự nhiên, trời mát là đẹp"
+    },
+    {
+      id:   "suggest",
+      icon: "💡",
+      name: "Em không khéo, gợi ý giúp !!!",
+      hint: "Chị thích gì cứ nói, em chiều"
+    },
+  ],
+
+  /* ----- Văn bản giao diện — chỉnh giọng văn ở đây ----- */
+  text: {
+    heroTitle:    "Trang ơi, gặp nhau chút được không 🌿",
+    heroSub:      "Chị chọn giúp em nha 🙏",
+    step1Label:   "Bước 1 / 3",
+    step1Title:   "Mình gặp nhau kiểu gì thì chị thích?",
+    step1Desc:    "Chọn một cái nha, không có lựa chọn nào sai hết 😄",
+    step2Label:   "Bước 2 / 3",
+    step2Title:   "Chị rảnh ngày nào tuần này?",
+    step2Desc:    "Em chọn ra mấy ngày rảnh rồi, chị thấy ngày nào được thì bấm nha",
+    step3Label:   "Bước 3 / 3",
+    step3Title:   "Gần xong rồi!",
+    step3Desc:    "Nhìn lại cho chắc, rồi gửi cho em nhé ☺️",
+    nopeTitle:    "Không sao hết á Trang ơi!",
+    nopeSub:      "Không cần phải giải thích gì hết nha. Nếu bao giờ chị muốn thì nhắn em, em luôn ở đây 😊",
+    busyPopup:    "Em bận mất rồi 😅",
+    busyPopupSub: "Ngày đó em có kế hoạch rồi, nhưng Thứ Sáu, Thứ Bảy, hoặc Chủ Nhật em rảnh nha chị!",
+    successTitle: "Duy đang phản hồi! 🎉",
+    successSub:   "Cảm ơn chị đã bấm vào cái web lỏ này 😂 Em sẽ nhắn chị ngay!",
+    otherTimeLabel: "Chị bận hết, muốn có giờ khác",
+    otherTimePlaceholder: "Chị rảnh vào khoảng nào thì ghi ra giúp em nha...",
+    suggestPlaceholder: "Xin mời...",
+    noteLabel:    "Ghi chú thêm (không bắt buộc)",
+    noteHint:     "Có gì muốn nói thêm với em thì cứ viết thoải mái",
+    notePlaceholder: "",
+    sendHint:     "Gửi để cho Duy xem lựa chọn của chị",
+    sendBtn:      "Gửi cho Duy 💌",
+  }
+};
+</script>
+<!-- ================================================================
+     POPUP modal cảnh báo ngày bận
+     ================================================================ -->
+<div class="popup-overlay" id="busyPopup" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
+  <div class="popup-box">
+    <div class="popup-emoji">😅</div>
+    <div class="popup-title" id="popupTitle"></div>
+    <div class="popup-desc"  id="popupDesc"></div>
+    <button class="btn-popup-close" id="btnPopupClose">Oke, em hiểu!</button>
+  </div>
+</div>
+
+<!-- ================================================================
+     MAIN APP
+     ================================================================ -->
+<main class="page" id="app">
+
+  <!-- Progress dots (ẩn ở màn hero và màn kết) -->
+  <div class="progress-bar" id="progressBar" style="display:none;" aria-hidden="true">
+    <div class="progress-dot" id="dot0"></div>
+    <div class="progress-dot" id="dot1"></div>
+    <div class="progress-dot" id="dot2"></div>
+  </div>
+
+  <!-- ── STEP 0: Hero ─────────────────────────────────────── -->
+  <section class="step active" id="step-0" aria-labelledby="heroHeading">
+    <div class="hero">
+      <span class="hero-emoji" role="img" aria-label="Chào">👋</span>
+      <h1 class="hero-title" id="heroHeading">
+        <span id="heroTitle"></span>
+      </h1>
+      <p class="hero-sub" id="heroSub"></p>
+      <button class="btn-start" id="btnStart" aria-label="Bắt đầu chọn">
+        Bắt đầu nào! →
+      </button>
+      <p class="scroll-hint" aria-hidden="true">
+        <span>↓</span> Chỉ mất 1 phút thôi
+      </p>
+    </div>
+  </section>
+
+  <!-- ── STEP 1: Chọn kiểu gặp ────────────────────────────── -->
+  <section class="step" id="step-1" aria-labelledby="step1Heading">
+    <div class="step-header">
+      <span class="step-label" id="step1Label"></span>
+      <h2 class="step-title" id="step1Heading"></h2>
+      <p  class="step-desc"  id="step1Desc"></p>
+    </div>
+
+    <div class="option-grid" id="meetTypeGrid" role="radiogroup" aria-label="Chọn kiểu gặp"></div>
+
+    <!-- Ô nhập gợi ý (chỉ hiện khi chọn "gợi ý giúp") -->
+    <div class="suggest-box" id="suggestBox">
+      <label for="suggestInput" class="note-label">Chị thích gặp kiểu gì?</label>
+      <textarea id="suggestInput" class="text-input" rows="3" aria-label="Gợi ý của chị"></textarea>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" id="btnBack1" aria-label="Quay lại">← Quay lại</button>
+      <button class="btn-next" id="btnNext1" disabled aria-label="Tiếp theo">Tiếp theo →</button>
+    </div>
+
+    <div class="nope-section">
+      <button class="btn-nope" id="btnNope1" aria-label="Không tham gia">Không được rùi 😶</button>
+    </div>
+  </section>
+
+  <!-- ── STEP 2: Chọn thời gian ───────────────────────────── -->
+  <section class="step" id="step-2" aria-labelledby="step2Heading">
+    <div class="step-header">
+      <span class="step-label" id="step2Label"></span>
+      <h2 class="step-title" id="step2Heading"></h2>
+      <p  class="step-desc"  id="step2Desc"></p>
+    </div>
+
+    <div class="day-grid" id="dayGrid" role="radiogroup" aria-label="Chọn ngày"></div>
+
+    <!-- Nút "chị bận hết" -->
+    <button class="btn-other-time" id="btnOtherTime" aria-pressed="false">
+      <span>🗓️</span> <span id="otherTimeLabel"></span>
+    </button>
+
+    <!-- Ô nhập thời gian khác -->
+    <div class="custom-time-box" id="customTimeBox">
+      <label for="customTimeInput" class="note-label">Chị rảnh lúc nào?</label>
+      <input type="text" id="customTimeInput" class="text-input" style="min-height:unset;resize:none;height:48px;" aria-label="Thời gian khác của chị" />
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-back" id="btnBack2" aria-label="Quay lại">← Quay lại</button>
+      <button class="btn-next" id="btnNext2" disabled aria-label="Tiếp theo">Tiếp theo →</button>
+    </div>
+
+    <div class="nope-section">
+      <button class="btn-nope" id="btnNope2" aria-label="Không tham gia">Không được rùi 😶</button>
+    </div>
+  </section>
+
+  <!-- ── STEP 3: Xác nhận & Gửi ───────────────────────────── -->
+  <section class="step" id="step-3" aria-labelledby="step3Heading">
+    <div class="step-header">
+      <span class="step-label" id="step3Label"></span>
+      <h2 class="step-title" id="step3Heading"></h2>
+      <p  class="step-desc"  id="step3Desc"></p>
+    </div>
+
+    <!-- Tóm tắt lựa chọn -->
+    <div class="summary-card" aria-label="Tóm tắt lựa chọn">
+      <div class="summary-row">
+        <span class="summary-row-icon">🎯</span>
+        <div class="summary-row-body">
+          <div class="summary-row-label">Kiểu gặp</div>
+          <div class="summary-row-val" id="summaryMeet">—</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="summary-row">
+        <span class="summary-row-icon">📅</span>
+        <div class="summary-row-body">
+          <div class="summary-row-label">Thời gian</div>
+          <div class="summary-row-val" id="summaryTime">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ghi chú thêm -->
+    <div style="display:flex;flex-direction:column;gap:.4rem;">
+      <label for="noteInput" class="note-label" id="noteLabelEl"></label>
+      <p class="note-hint" id="noteHintEl"></p>
+      <textarea id="noteInput" class="text-input" rows="3" aria-label="Ghi chú thêm"></textarea>
+    </div>
+
+    <!-- Hint nhỏ trên nút gửi -->
+    <p class="send-hint" id="sendHintEl"></p>
+
+    <!-- Error box -->
+    <div class="error-box" id="errorBox" role="alert">
+      <span>⚠️</span>
+      <span id="errorMsg">Có lỗi xảy ra, chị thử lại giúp em nhé!</span>
+    </div>
+
+    <!-- Nút gửi -->
+    <button class="btn-send" id="btnSend" aria-label="Gửi cho Duy">
+      <span id="btnSendText"></span>
+    </button>
+
+    <!-- Copy fallback -->
+    <button class="btn-copy" id="btnCopy" aria-label="Copy tin nhắn dự phòng">
+      📋 Copy tin nhắn (dự phòng)
+    </button>
+    <p class="copy-feedback" id="copyFeedback" aria-live="polite"></p>
+
+    <div class="nav-row">
+      <button class="btn-back" id="btnBack3" aria-label="Quay lại">← Quay lại</button>
+    </div>
+
+    <div class="nope-section">
+      <button class="btn-nope" id="btnNope3" aria-label="Không tham gia">Không được rùi 😶</button>
+    </div>
+  </section>
+
+  <!-- ── STEP NOPE: Không tham gia ────────────────────────── -->
+  <section class="step" id="step-nope" aria-labelledby="nopeHeading">
+    <div class="nope-screen">
+      <div class="nope-emoji" role="img" aria-label="Không sao">💙</div>
+      <h2 class="nope-text" id="nopeHeading"></h2>
+      <p  class="nope-sub"  id="nopeSub"></p>
+      <button class="btn-back-from-nope" id="btnBackFromNope">← Thôi quay lại xem nào</button>
+    </div>
+  </section>
+
+  <!-- ── STEP SUCCESS: Gửi thành công ─────────────────────── -->
+  <section class="step" id="step-success" aria-labelledby="successHeading">
+    <div class="success-screen">
+      <div class="success-emoji" role="img" aria-label="Thành công">🎉</div>
+      <h2 class="success-title" id="successHeading"></h2>
+      <p  class="success-sub"  id="successSub"></p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================================================================
+     JAVASCRIPT — Logic điều hướng + form
+     ================================================================ -->
+<script>
+/* ----------------------------------------------------------------
+   STATE — toàn bộ dữ liệu chọn của người dùng
+   ---------------------------------------------------------------- */
+const state = {
+  selectedMeetId:   null,   // id của lựa chọn kiểu gặp
+  selectedMeetName: null,
+  suggestText:      "",
+  selectedDayLabel: null,
+  selectedDayDate:  null,
+  customTimeText:   "",
+  otherTimeSelected: false,
+  previousStep:     0,      // để nút Nope có thể quay lại đúng bước
+};
+
+/* ----------------------------------------------------------------
+   DOM REFS
+   ---------------------------------------------------------------- */
+const app          = document.getElementById("app");
+const progressBar  = document.getElementById("progressBar");
+const dots         = [0,1,2].map(i => document.getElementById("dot"+i));
+const busyPopup    = document.getElementById("busyPopup");
+const btnPopupClose= document.getElementById("btnPopupClose");
+
+/* ----------------------------------------------------------------
+   KHỞI TẠO: Render các phần tử động từ CONFIG
+   ---------------------------------------------------------------- */
+function init() {
+  const C = CONFIG;
+  const T = C.text;
+
+  /* Hero */
+  document.getElementById("heroTitle").textContent = T.heroTitle;
+  document.getElementById("heroSub").textContent   = T.heroSub;
+
+  /* Step labels & headings */
+  document.getElementById("step1Label").textContent   = T.step1Label;
+  document.getElementById("step1Heading").textContent = T.step1Title;
+  document.getElementById("step1Desc").textContent    = T.step1Desc;
+  document.getElementById("step2Label").textContent   = T.step2Label;
+  document.getElementById("step2Heading").textContent = T.step2Title;
+  document.getElementById("step2Desc").textContent    = T.step2Desc;
+  document.getElementById("step3Label").textContent   = T.step3Label;
+  document.getElementById("step3Heading").textContent = T.step3Title;
+  document.getElementById("step3Desc").textContent    = T.step3Desc;
+
+  /* Nope */
+  document.getElementById("nopeHeading").textContent = T.nopeTitle;
+  document.getElementById("nopeSub").textContent     = T.nopeSub;
+
+  /* Success */
+  document.getElementById("successHeading").textContent = T.successTitle;
+  document.getElementById("successSub").textContent     = T.successSub;
+
+  /* Step 3 labels */
+  document.getElementById("noteLabelEl").textContent = T.noteLabel;
+  document.getElementById("noteHintEl").textContent  = T.noteHint;
+  document.getElementById("noteInput").placeholder   = T.notePlaceholder;
+  document.getElementById("sendHintEl").textContent  = T.sendHint;
+  document.getElementById("btnSendText").textContent = T.sendBtn;
+  document.getElementById("otherTimeLabel").textContent = T.otherTimeLabel;
+
+  /* Popup */
+  document.getElementById("popupTitle").textContent = T.busyPopup;
+  document.getElementById("popupDesc").textContent  = T.busyPopupSub;
+
+  /* Render danh sách kiểu gặp */
+  const grid = document.getElementById("meetTypeGrid");
+  C.meetTypes.forEach(mt => {
+    const card = document.createElement("button");
+    card.className       = "option-card";
+    card.type            = "button";
+    card.id              = "meet-" + mt.id;
+    card.setAttribute("role", "radio");
+    card.setAttribute("aria-checked", "false");
+    card.setAttribute("aria-label", mt.name);
+    card.innerHTML = `
+      <span class="option-icon" aria-hidden="true">${mt.icon}</span>
+      <span class="option-text">
+        <span class="option-name">${mt.name}</span>
+      </span>
+      <span class="option-check" aria-hidden="true">✓</span>
+    `;
+    card.addEventListener("click", () => selectMeetType(mt));
+    grid.appendChild(card);
+  });
+
+  /* Ô nhập gợi ý */
+  document.getElementById("suggestInput").placeholder = T.suggestPlaceholder;
+  document.getElementById("customTimeInput").placeholder = T.otherTimePlaceholder;
+
+  /* Render lịch ngày */
+  const dayGrid = document.getElementById("dayGrid");
+  C.days.forEach(day => {
+    const btn = document.createElement("button");
+    btn.className = "day-card" + (day.busy ? " busy" : "");
+    btn.type      = "button";
+    btn.setAttribute("role", "radio");
+    btn.setAttribute("aria-checked", "false");
+    btn.setAttribute("aria-label", `${day.label} ${day.date}`);
+    btn.innerHTML = `
+      <span class="day-emoji" aria-hidden="true">${day.emoji}</span>
+      <span class="day-name">${day.label}</span>
+      <span class="day-date">${day.date}</span>
+      <span class="day-check" aria-hidden="true">✓</span>
+    `;
+    btn.addEventListener("click", () => {
+      if (day.busy) {
+        showBusyPopup();
+      } else {
+        selectDay(day, btn);
+      }
+    });
+    dayGrid.appendChild(btn);
+  });
+}
+
+/* ----------------------------------------------------------------
+   ĐIỀU HƯỚNG
+   ---------------------------------------------------------------- */
+let currentStep = 0;
+
+function showStep(id) {
+  document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+  const target = document.getElementById("step-" + id);
+  if (target) target.classList.add("active");
+  currentStep = id;
+
+  /* Progress dots: chỉ hiện ở step 1,2,3 */
+  const isMainStep = [1,2,3].includes(id);
+  progressBar.style.display = isMainStep ? "flex" : "none";
+  if (isMainStep) {
+    dots.forEach((d, i) => {
+      d.classList.remove("done","active");
+      const stepIndex = id - 1; // 0-based
+      if (i < stepIndex)       d.classList.add("done");
+      else if (i === stepIndex) d.classList.add("active");
+    });
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* Nút bắt đầu */
+document.getElementById("btnStart").addEventListener("click", () => showStep(1));
+
+/* Back buttons */
+document.getElementById("btnBack1").addEventListener("click", () => showStep(0));
+document.getElementById("btnBack2").addEventListener("click", () => showStep(1));
+document.getElementById("btnBack3").addEventListener("click", () => showStep(2));
+
+/* Next buttons */
+document.getElementById("btnNext1").addEventListener("click", () => showStep(2));
+document.getElementById("btnNext2").addEventListener("click", () => {
+  fillSummary();
+  showStep(3);
+});
+
+/* Nope buttons */
+function goNope(fromStep) {
+  state.previousStep = fromStep;
+  showStep("nope");
+  progressBar.style.display = "none";
+}
+document.getElementById("btnNope1").addEventListener("click", () => goNope(1));
+document.getElementById("btnNope2").addEventListener("click", () => goNope(2));
+document.getElementById("btnNope3").addEventListener("click", () => goNope(3));
+document.getElementById("btnBackFromNope").addEventListener("click", () => showStep(state.previousStep));
+
+/* ----------------------------------------------------------------
+   STEP 1 — CHỌN KIỂU GẶP
+   ---------------------------------------------------------------- */
+function selectMeetType(mt) {
+  /* Bỏ chọn cũ */
+  document.querySelectorAll(".option-card").forEach(c => {
+    c.classList.remove("selected");
+    c.setAttribute("aria-checked","false");
+  });
+
+  /* Chọn mới */
+  const card = document.getElementById("meet-" + mt.id);
+  card.classList.add("selected");
+  card.setAttribute("aria-checked","true");
+
+  state.selectedMeetId   = mt.id;
+  state.selectedMeetName = mt.name;
+
+  /* Hiện/ẩn ô gợi ý */
+  const suggestBox = document.getElementById("suggestBox");
+  if (mt.id === "suggest") {
+    suggestBox.classList.add("visible");
+  } else {
+    suggestBox.classList.remove("visible");
+    state.suggestText = "";
+  }
+
+  document.getElementById("btnNext1").disabled = false;
+}
+
+/* ----------------------------------------------------------------
+   STEP 2 — CHỌN NGÀY
+   ---------------------------------------------------------------- */
+function selectDay(day, btn) {
+  /* Bỏ chọn cũ */
+  document.querySelectorAll(".day-card").forEach(c => {
+    c.classList.remove("selected");
+    c.setAttribute("aria-checked","false");
+  });
+  document.getElementById("btnOtherTime").classList.remove("selected");
+  document.getElementById("btnOtherTime").setAttribute("aria-pressed","false");
+
+  /* Chọn mới */
+  btn.classList.add("selected");
+  btn.setAttribute("aria-checked","true");
+
+  state.selectedDayLabel  = day.label;
+  state.selectedDayDate   = day.date;
+  state.otherTimeSelected = false;
+
+  /* Ẩn ô custom */
+  document.getElementById("customTimeBox").classList.remove("visible");
+
+  document.getElementById("btnNext2").disabled = false;
+}
+
+/* Nút "chị bận hết" */
+document.getElementById("btnOtherTime").addEventListener("click", () => {
+  /* Bỏ chọn ngày */
+  document.querySelectorAll(".day-card").forEach(c => {
+    c.classList.remove("selected");
+    c.setAttribute("aria-checked","false");
+  });
+  state.selectedDayLabel  = null;
+  state.selectedDayDate   = null;
+  state.otherTimeSelected = true;
+
+  const btn = document.getElementById("btnOtherTime");
+  btn.classList.add("selected");
+  btn.setAttribute("aria-pressed","true");
+
+  document.getElementById("customTimeBox").classList.add("visible");
+  document.getElementById("btnNext2").disabled = false;
+});
+
+/* ----------------------------------------------------------------
+   POPUP ngày bận
+   ---------------------------------------------------------------- */
+function showBusyPopup() {
+  busyPopup.classList.add("show");
+  busyPopup.setAttribute("aria-hidden","false");
+  btnPopupClose.focus();
+}
+function hideBusyPopup() {
+  busyPopup.classList.remove("show");
+  busyPopup.setAttribute("aria-hidden","true");
+}
+btnPopupClose.addEventListener("click", hideBusyPopup);
+busyPopup.addEventListener("click", e => { if (e.target === busyPopup) hideBusyPopup(); });
+
+/* ----------------------------------------------------------------
+   STEP 3 — ĐIỀN SUMMARY
+   ---------------------------------------------------------------- */
+function fillSummary() {
+  /* Kiểu gặp */
+  let meetLabel = state.selectedMeetName || "—";
+  if (state.selectedMeetId === "suggest") {
+    const suggest = document.getElementById("suggestInput").value.trim();
+    state.suggestText = suggest;
+    if (suggest) meetLabel += ` — "${suggest}"`;
+  }
+  document.getElementById("summaryMeet").textContent = meetLabel;
+
+  /* Thời gian */
+  let timeLabel = "—";
+  if (state.otherTimeSelected) {
+    const custom = document.getElementById("customTimeInput").value.trim();
+    state.customTimeText = custom;
+    timeLabel = custom ? custom : "Chị sẽ báo thêm";
+  } else if (state.selectedDayLabel) {
+    timeLabel = `${state.selectedDayLabel}, ${state.selectedDayDate}`;
+  }
+  document.getElementById("summaryTime").textContent = timeLabel;
+}
+
+/* ----------------------------------------------------------------
+   GỬI FORM — POST JSON tới Formspree
+   ---------------------------------------------------------------- */
+async function sendForm() {
+  const noteInput  = document.getElementById("noteInput").value.trim();
+  const btnSend    = document.getElementById("btnSend");
+  const btnSendTxt = document.getElementById("btnSendText");
+  const errorBox   = document.getElementById("errorBox");
+  const errorMsg   = document.getElementById("errorMsg");
+
+  /* Xác định giá trị thời gian */
+  let thoiGian = "";
+  if (state.otherTimeSelected) {
+    thoiGian = state.customTimeText || "Chị sẽ báo thêm";
+  } else if (state.selectedDayLabel) {
+    thoiGian = `${state.selectedDayLabel} ${state.selectedDayDate}`;
+  }
+
+  const payload = {
+    kieu_gap:    state.selectedMeetName + (state.suggestText ? ` — ${state.suggestText}` : ""),
+    thoi_gian:   thoiGian,
+    y_kien_khac: state.suggestText,
+    ghi_chu_them: noteInput,
+    /* Thông tin người gửi để Duy biết */
+    nguoi_gui:   CONFIG.receiver,
+  };
+
+  /* Trạng thái đang gửi */
+  btnSend.disabled = true;
+  btnSendTxt.innerHTML = `<span class="spinner"></span> Đang gửi...`;
+  errorBox.classList.remove("visible");
+
+  try {
+    const res = await fetch(CONFIG.FORM_ENDPOINT, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body:    JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || `HTTP ${res.status}`);
+    }
+
+    /* Thành công */
+    showStep("success");
+    progressBar.style.display = "none";
+  } catch (err) {
+    /* Lỗi — cho thử lại */
+    btnSend.disabled    = false;
+    btnSendTxt.textContent = CONFIG.text.sendBtn;
+    errorBox.classList.add("visible");
+    errorMsg.textContent = `Ủa lỗi rồi 😅 (${err.message}) — Chị thử lại, hoặc dùng nút Copy bên dưới nha!`;
+  }
+}
+
+document.getElementById("btnSend").addEventListener("click", sendForm);
+
+/* ----------------------------------------------------------------
+   COPY TIN NHẮN DỰ PHÒNG
+   ---------------------------------------------------------------- */
+document.getElementById("btnCopy").addEventListener("click", () => {
+  /* Lấy thời gian */
+  let thoiGian = state.otherTimeSelected
+    ? (document.getElementById("customTimeInput").value.trim() || "sẽ báo thêm")
+    : `${state.selectedDayLabel} ${state.selectedDayDate}`;
+
+  const note = document.getElementById("noteInput").value.trim();
+  const suggest = document.getElementById("suggestInput").value.trim();
+
+  let msg = `[Lựa chọn từ ${CONFIG.receiver} gửi ${CONFIG.sender}]\n`;
+  msg    += `• Kiểu gặp: ${state.selectedMeetName || "—"}`;
+  if (suggest)  msg += ` — "${suggest}"`;
+  msg    += `\n• Thời gian: ${thoiGian}`;
+  if (note)     msg += `\n• Ghi chú: ${note}`;
+
+  navigator.clipboard.writeText(msg).then(() => {
+    document.getElementById("copyFeedback").textContent = "✓ Đã copy! Chị dán vào Messenger cho Duy nha 😊";
+    setTimeout(() => document.getElementById("copyFeedback").textContent = "", 4000);
+  }).catch(() => {
+    document.getElementById("copyFeedback").textContent = "Ủa không copy được, chị chụp màn hình rồi gửi cho Duy cũng được 😂";
+  });
+});
+
+/* ----------------------------------------------------------------
+   START
+   ---------------------------------------------------------------- */
+init();
+</script>
+</body>
+</html>
